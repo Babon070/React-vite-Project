@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Card } from "@/components/ui/card"
 import { feauturedItems, programs } from '@/constants'
 import { FaArrowRightLong } from "react-icons/fa6"
-import { Link } from "react-router-dom"
 
 export default function home() {
     return (
