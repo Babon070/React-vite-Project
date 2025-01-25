@@ -47,7 +47,7 @@ const Login = () => {
 
     return (
         <div className='flex flex-col'>
-            { isLoading && <FillLoading/>}
+            {isLoading && <FillLoading />}
             <h2 className='text-xl font-bold'>
                 Login
             </h2>

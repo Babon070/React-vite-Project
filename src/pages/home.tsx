@@ -2,9 +2,23 @@ import men from "@/assets/men.png"
 import { Button } from '@/components/ui/button'
 import { Card } from "@/components/ui/card"
 import { feauturedItems, programs } from '@/constants'
+import { useUserState } from "@/store/user.store"
+import { CgGym } from "react-icons/cg"
 import { FaArrowRightLong } from "react-icons/fa6"
+import { Link, useNavigate } from "react-router-dom"
+import { auth } from "@/firebase"
 
 export default function home() {
+    const navigate = useNavigate()
+    const { user, setUser } = useUserState()
+
+    const onLogout = () => {
+        auth.signOut().then(() => {
+            setUser(null)
+            navigate('/auth')
+        })
+    }
+
     return (
         <>
             <div className='w-full h-screen flex items-center'>
@@ -16,9 +30,31 @@ export default function home() {
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, dolore!
                         amet consectetur adipisicing elit. Ab, dolore!
                     </p>
-                    <Button className='w-fit mt-6 font-bold h-12' size={'lg'}>
-                        Join club now
-                    </Button>
+                    {user ? (
+                        <div className="flex gap-4">
+                            <Link to='/dashboard'>
+                                <Button className="w-fit mt-6 font-bold h-12">
+                                    <span>Go to Gym</span>
+                                    <CgGym className="h-5 w-5 ml-2" />
+                                </Button>
+                            </Link>
+                            <Button 
+                            className="w-fit mt-6 font-bold h-12"
+                            variant={'destructive'}
+                            onClick={onLogout}
+                            >
+                                <span>Logout</span>
+                                <CgGym className="h-5 w-5 ml-2" />
+                            </Button>
+                        </div>
+                    ) : (
+                        <Link to='/'>
+                            <Button className='w-fit mt-6 font-bold h-12' size={'lg'}>
+                                Join club now
+                            </Button>
+                        </Link>
+
+                    )}
                     <div className='mt-24'>
                         <div className='flex items-center gap-4 mt-2'>
                             {feauturedItems.map((Icon, index) => (
